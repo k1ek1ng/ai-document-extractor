@@ -1,0 +1,47 @@
+{
+  "vendor_name": "Cascade Tooling Co.",
+  "invoice_number": "INV-20260002",
+  "invoice_date": "2026-04-19",
+  "po_number": "PO-69399",
+  "line_items": [
+    {
+      "description": "Polymer Gasket A-326",
+      "quantity": 4.0,
+      "unit_price": 260.97,
+      "amount": 1043.88
+    },
+    {
+      "description": "Sealed Bearing B-529",
+      "quantity": 3.0,
+      "unit_price": 251.83,
+      "amount": 755.49
+    },
+    {
+      "description": "Compact Enclosure B-673",
+      "quantity": 10.0,
+      "unit_price": 244.69,
+      "amount": 2446.9
+    },
+    {
+      "description": "Compact Enclosure C-292",
+      "quantity": 12.0,
+      "unit_price": 49.07,
+      "amount": 588.84
+    },
+    {
+      "description": "Aluminum Housing C-161",
+      "quantity": 24.0,
+      "unit_price": 46.55,
+      "amount": 1117.2
+    },
+    {
+      "description": "Wiring Harness B-895",
+      "quantity": 40.0,
+      "unit_price": 95.06,
+      "amount": 3802.4
+    }
+  ],
+  "subtotal": 9754.71,
+  "tax": 536.51,
+  "total": 10291.22
+}

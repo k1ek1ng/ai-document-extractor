@@ -1,0 +1,23 @@
+{
+  "vendor_name": "Summit Controls Inc.",
+  "invoice_number": "INV-20260004",
+  "invoice_date": "2026-03-16",
+  "po_number": "PO-97051",
+  "line_items": [
+    {
+      "description": "Sensor Mount B-811",
+      "quantity": 36.0,
+      "unit_price": 259.14,
+      "amount": 9329.04
+    },
+    {
+      "description": "Compact Enclosure B-170",
+      "quantity": 23.0,
+      "unit_price": 268.68,
+      "amount": 6179.64
+    }
+  ],
+  "subtotal": 15508.68,
+  "tax": 852.98,
+  "total": 16361.66
+}

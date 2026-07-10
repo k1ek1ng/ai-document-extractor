@@ -1,0 +1,35 @@
+{
+  "vendor_name": "Granite Electric Corp.",
+  "invoice_number": "INV-20260003",
+  "invoice_date": "2026-04-02",
+  "po_number": "PO-97584",
+  "line_items": [
+    {
+      "description": "Sealed Bearing C-898",
+      "quantity": 20.0,
+      "unit_price": 114.05,
+      "amount": 2281.0
+    },
+    {
+      "description": "Relay Board C-606",
+      "quantity": 16.0,
+      "unit_price": 39.59,
+      "amount": 633.44
+    },
+    {
+      "description": "Relay Board C-174",
+      "quantity": 22.0,
+      "unit_price": 329.06,
+      "amount": 7239.32
+    },
+    {
+      "description": "Sealed Bearing B-255",
+      "quantity": 8.0,
+      "unit_price": 231.83,
+      "amount": 1854.64
+    }
+  ],
+  "subtotal": 12008.4,
+  "tax": 660.46,
+  "total": 12668.86
+}
