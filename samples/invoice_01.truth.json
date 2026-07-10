@@ -1,0 +1,35 @@
+{
+  "vendor_name": "Beacon Automation Inc.",
+  "invoice_number": "INV-20260001",
+  "invoice_date": "2026-01-08",
+  "po_number": "PO-92657",
+  "line_items": [
+    {
+      "description": "Steel Bracket A-940",
+      "quantity": 10.0,
+      "unit_price": 179.49,
+      "amount": 1794.9
+    },
+    {
+      "description": "Compact Enclosure A-619",
+      "quantity": 35.0,
+      "unit_price": 45.08,
+      "amount": 1577.8
+    },
+    {
+      "description": "Polymer Gasket B-171",
+      "quantity": 14.0,
+      "unit_price": 19.76,
+      "amount": 276.64
+    },
+    {
+      "description": "Polymer Gasket A-946",
+      "quantity": 16.0,
+      "unit_price": 43.55,
+      "amount": 696.8
+    }
+  ],
+  "subtotal": 4346.14,
+  "tax": 239.04,
+  "total": 4585.18
+}
