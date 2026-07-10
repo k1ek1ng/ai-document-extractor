@@ -1,0 +1,7 @@
+anthropic>=0.40
+pydantic>=2.5
+pypdf>=4.0
+pypdfium2>=4.25
+openpyxl>=3.1
+fpdf2>=2.7
+pytest>=8.0
