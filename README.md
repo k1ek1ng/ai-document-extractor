@@ -1,23 +1,22 @@
 # ai-document-extractor
 
-Invoice PDFs to validated JSON and Excel.
+Extracts structured data from invoice PDFs and outputs validated JSON and Excel.
 
-Two engines behind one schema:
+Two extraction engines produce the same schema:
 
-| engine | how | when |
+| engine | method | intended input |
 |---|---|---|
-| `text` | reads the PDF's embedded text layer with patterns — no network, no cost, deterministic | digital PDFs with a known layout |
-| `llm` | renders pages to images, a vision model extracts the fields | scans, photos, layouts the patterns do not know |
+| `text` | regex patterns over the PDF's embedded text layer; deterministic, no API calls | digital PDFs in a known layout |
+| `llm` | renders pages to images and extracts fields with a vision model | scans, photos, and unfamiliar layouts |
 
-Both emit into the same pydantic model, which checks the arithmetic: quantity x
-unit price = line amount, lines sum to subtotal, subtotal + tax = total. Line
-arithmetic is a hard failure; the invoice-level checks attach warnings rather
-than rejecting, because a real invoice can legitimately carry a charge that is
-not on any line — and knowing that is different from silently accepting it.
+Both engines populate a pydantic model that validates the arithmetic: quantity
+times unit price equals the line amount, line amounts sum to the subtotal, and
+subtotal plus tax equals the total. A line-level mismatch raises an error. A
+total-level mismatch adds a warning, since invoices can include charges not
+listed as lines, such as freight or tariffs.
 
-That distinction is the whole point of the schema. A model that reads `1,240.00`
-as `124.00` produces a perfectly well-formed object. Only the arithmetic catches
-it.
+The arithmetic check exists because extraction errors are often well-formed. A
+model that reads `1,240.00` as `124.00` still returns a valid object.
 
 ## Run it
 
@@ -35,41 +34,31 @@ export ANTHROPIC_API_KEY=...
 python -m extractor.cli samples/invoice_01.pdf --engine llm --out out/
 ```
 
-Output is one JSON per invoice plus a combined `invoices.xlsx` — a summary sheet
-and a line-item sheet, with a warnings column.
+Output is one JSON per invoice plus a combined `invoices.xlsx` with a summary
+sheet, a line-item sheet, and a warnings column.
 
-Samples are generated with known values, so extraction accuracy is a test rather
-than a judgment call: `tests/test_extractor.py` compares output against the
-ground-truth JSON emitted alongside each PDF.
+Samples are generated with known values, so `tests/test_extractor.py` compares
+extracted output against the ground-truth JSON generated with each PDF.
 
-## Where the text engine breaks
+## Known limitations of the text engine
 
-Worth being specific, because the failure modes are the interesting part and they
-generalize:
+- **Whitespace in identifiers.** A pattern such as `PO\d{6}` does not match
+  `PO 123456`. On real invoices, one group of suppliers printed PO numbers this
+  way, so their invoices consistently returned no PO while the remaining fields
+  parsed correctly.
+- **Vendor-specific fields.** Some distributors omit line descriptions entirely.
+  A field should be confirmed present before a pattern is written for it.
+- **Column detection.** `LINE_RE` assumes columns are separated by two or more
+  spaces. Single-space layouts and wrapped descriptions are not supported.
 
-- **Separators inside identifiers.** A pattern like `PO\d{6}` misses `PO 123456`.
-  I hit exactly this on real invoices — a PO reference that printed with a space,
-  most often from Spanish-language suppliers whose layout differed, so a whole
-  vendor family silently came back with no PO. Everything else about those
-  invoices parsed fine, which is what made it slow to notice.
-- **Fields that exist for some vendors and not others.** Line descriptions are
-  populated by some distributors and absent from others. Before adding a capture
-  pattern, check whether the field is actually printed — otherwise you are
-  writing a pattern for a field that is not there.
-- **Column detection by whitespace runs.** `LINE_RE` assumes two or more spaces
-  separate columns. A single-space layout, or a wrapped description, breaks it.
-  It fails loudly (no lines matched, use the llm engine) rather than returning a
-  partial invoice, which is the right failure but still a failure.
+In each case the engine raises an error rather than returning a partial invoice.
+That error is the condition for routing the document to the LLM engine.
 
-The routing rule that falls out: run the cheap deterministic engine first, and
-have it tell you when to escalate. The text engine raises rather than guessing,
-so escalation is a signal, not a fallback that quietly degrades.
+## Background
 
-## Origin
-
-A generic rebuild of extraction tooling I built during an internship at Cypress
-Industries, where it fed an AP invoice matcher. This repo contains none of that
-code and no real documents — every sample is synthetic.
+This is a simplified rebuild of extraction tooling I developed during an
+internship, where it fed an accounts-payable matching pipeline. The repository
+contains no production code or real invoices; all samples are synthetic.
 
 Python 3.11+, pydantic v2, pypdf, pypdfium2, Anthropic API, openpyxl, fpdf2,
 pytest. MIT.
