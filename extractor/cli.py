@@ -41,7 +41,7 @@ def main(argv: list[str] | None = None) -> int:
     for pdf in collect_pdfs(args.input):
         try:
             inv = engine.extract(str(pdf))
-        except Exception as e:  # noqa: BLE001 — report and continue the batch
+        except Exception as e:  # noqa: BLE001: report and continue the batch
             print(f"FAIL  {pdf.name}: {e}", file=sys.stderr)
             failures += 1
             continue

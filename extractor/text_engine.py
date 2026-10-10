@@ -2,7 +2,7 @@
 
 Parses digitally-generated invoice PDFs by reading the embedded text layer
 (no OCR, no LLM, no network). Fast and deterministic, but only works when
-the PDF has real text and a layout the patterns understand — which is
+the PDF has real text and a layout the patterns understand. That is
 exactly its role: handle the easy majority cheaply, leave scans and weird
 layouts to the LLM engine.
 """
@@ -47,7 +47,7 @@ def extract(path: str) -> Invoice:
     text = pdf_text(path)
     if not text.strip():
         raise ValueError(
-            f"{path}: no text layer found (scanned document?) — use the llm engine"
+            f"{path}: no text layer found (scanned document?), use the llm engine"
         )
 
     fields: dict = {}
@@ -73,7 +73,7 @@ def extract(path: str) -> Invoice:
         for m in LINE_RE.finditer(text)
     ]
     if not items:
-        raise ValueError(f"{path}: no line items matched — use the llm engine")
+        raise ValueError(f"{path}: no line items matched, use the llm engine")
 
     return Invoice(
         vendor_name=fields.get("vendor_name", "UNKNOWN"),

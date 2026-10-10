@@ -62,7 +62,7 @@ def render_pdf(inv: dict, path: Path) -> None:
     pdf.cell(0, 6, f"PO #: {inv['po_number']}", new_x="LMARGIN", new_y="NEXT")
     pdf.cell(0, 6, "", new_x="LMARGIN", new_y="NEXT")
 
-    # two spaces minimum between columns — matches the text engine's contract
+    # two spaces minimum between columns, matches the text engine's contract
     pdf.cell(0, 6, f"{'Description':<34}{'Qty':>6}  {'Price':>10}  {'Amount':>10}",
              new_x="LMARGIN", new_y="NEXT")
     for li in inv["line_items"]:

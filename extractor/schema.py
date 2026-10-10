@@ -39,7 +39,7 @@ class Invoice(BaseModel):
 
     @model_validator(mode="after")
     def check_totals(self) -> "Invoice":
-        """Arithmetic is validated, not trusted — LLMs and OCR both make
+        """Arithmetic is validated, not trusted. LLMs and OCR both make
         number mistakes, and a wrong total in an AP system is worse than
         a rejected extraction."""
         line_sum = round(sum(li.amount for li in self.line_items), 2)

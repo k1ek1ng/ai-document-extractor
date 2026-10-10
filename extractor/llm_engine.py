@@ -7,7 +7,7 @@ Requires ANTHROPIC_API_KEY.
 Design notes:
 - The model is forced through the same pydantic schema as the text engine,
   so a hallucinated or mis-read number that breaks the arithmetic checks
-  becomes a validation error or warning — never silent bad data.
+  becomes a validation error or warning, never silent bad data.
 - Temperature 0; the task is transcription, not creativity.
 """
 from __future__ import annotations
